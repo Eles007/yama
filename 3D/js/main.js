@@ -27,7 +27,7 @@ window.onload = function () {
     const ui = new UI({ callbacks: { move, printPoints, printEdges, printPolygons } });
 
 
-    const SCENE = [sur.hyperbolicParaboloid(20, { rotateOz: new Point })];
+
     const SCENE = [
         //солнце
         sur.sphera(
@@ -53,16 +53,8 @@ window.onload = function () {
             '#FFFFF0',
             { rotateOz: new Point(0, 0, 0) }
         ),
-        //луна
-        sur.sphera(
-            20,
-            0.2,
-            new Point(2, 27, -3),
-            '#708090',
-            { rotateOz: new Point(0, 0, 0) }
-        ),
         //земля
-        sur.sphera(
+        sur.zemlyluna(
             20,
             2,
             new Point(0, 25, 0),
@@ -118,7 +110,7 @@ window.onload = function () {
             { rotateOz: new Point(0, 0, 0) }
         )
     ];
-    const LIGHT = new Light(0, 0, 0, 40); //источник света
+    const LIGHT = new Light(0, 0, 0, 60); //источник света
 
 
     let canRotate = 0;
@@ -299,7 +291,7 @@ window.onload = function () {
     }
 
 
-    setInterval(animation, 100);
+    setInterval(animation, 10);
 
     let FPS = 0;
     let FPSout = 0;
