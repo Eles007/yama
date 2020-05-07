@@ -54,7 +54,7 @@ window.onload = function () {
             { rotateOz: new Point(0, 0, 0) }
         ),
         //земля
-        sur.zemlyluna(
+        sur.sphera(
             20,
             2,
             new Point(0, 25, 0),
@@ -112,6 +112,15 @@ window.onload = function () {
     ];
     const LIGHT = new Light(0, 0, 0, 60); //источник света
 
+    SCENE.push(
+        sur.sphera(
+            20,
+            0.2,
+            new Point(1, 27, -3),
+            '#4169E1',
+            { rotateOz: new Point(0, 0, 0), rotateOy: SCENE[4].points[-1] }
+        )
+    )
 
     let canRotate = 0;
     let canPrint = {
