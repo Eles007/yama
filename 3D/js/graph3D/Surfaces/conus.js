@@ -8,17 +8,17 @@ Surfaces.prototype.conus = (count = 10, point = new Point(0, 0, 0), color = 'ff0
     const delta = Math.PI * 2 / count;
     for (let i = 0; i <= Math.PI; i += delta) {
         for (let j = 0; j < Math.PI * 2; j += delta) {
-            const x = point.x + 3 * i * Math.cos(j);
-            const y = point.y + 3 * i * Math.sin(j);
-            const z = point.z + 3 * i;
+            const x = point.x + 2 * i * Math.cos(j);
+            const y = point.y + 2 * i * Math.sin(j);
+            const z = point.z + 4 * i;
             points.push(new Point(x, y, z));
         }
     }
     for (let i = 0; i <= Math.PI; i += delta) {
         for (let j = 0; j < Math.PI * 2; j += delta) {
-            const x = -point.x + 3 * i * Math.cos(j);
-            const y = -point.y + 3 * i * Math.sin(j);
-            const z = point.z + 3 * -i;
+            const x = -point.x + 2 * i * Math.cos(j);
+            const y = -point.y + 2 * i * Math.sin(j);
+            const z = point.z + 4 * -i;
             points.push(new Point(x, y, z));
         }
     }

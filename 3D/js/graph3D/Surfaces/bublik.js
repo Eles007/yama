@@ -1,36 +1,38 @@
-Surfaces.prototype.bublik = (count = 10, R = 10) => {
-    const points = [];
-    const edges = [];
-    const polygons = [];
+Surfaces.prototype.bublik = (count = 20, R = 6, point = new Point(0, 0), color = 'ff0000', animation) => {
+    let points = [];
+    let edges = [];
+    let polygons = [];
 
-    function setRoundOfPoints(count, R) {
-        const da = 2 * Math.PI / count;
-        for (let i = 0; i < 2 * Math.PI; i += da) {
-            const x = R * Math.sin(i);
-            const z = R * Math.cos(i);
-            const y = 5;
-            points.push(new Point(x, y, z));
+
+    //расставить точки
+    const delta = Math.PI * 2 / count;
+    for (let i = 1 / 2; i <= Math.PI / 3; i += delta) {
+        for (let j = 0; j < Math.PI * 2; j += delta) {
+            const x = point.x + R * Math.sin(i) * Math.cos(j);
+            const y = point.y + R * Math.sin(i) * Math.sin(j);
+            points.push(new Point(x, y));
         }
     }
-
-    setRoundOfPoints(count, R);
-    setRoundOfPoints(count, R / 1.4);
-
+    //ребра
     for (let i = 0; i < points.length; i++) {
-        if (points[i + count]) {
+        //вдоль
+        if (i + 1 < points.length && (i + 1) % count !== 0) {
+            edges.push(new Edge(i, i + 1));
+        } else if ((i + 1) % count === 0) {
+            edges.push(new Edge(i, i + 1 - count));
+        }
+        //поверек
+        if (i + count < points.length) {
             edges.push(new Edge(i, i + count));
         }
-        if (points[i + 1] && i !== count - 1) {
-            edges.push(new Edge(i, i + 1));
+    }
+    //полигоны
+    for (let i = 0; i < points.length; i++) {
+        if (i + 1 + count < points.length && (i + 1) % count !== 0) {
+            polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], color));
+        } else if ((i + count) < points.length && (i + 1) % count === 0) {
+            polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count], color));
         }
-        edges.push(new Edge(0, count - 1));
-        edges.push(new Edge(count, 2*count - 1));
     }
-
-    for (let i = 0; i < count - 1; i++) {
-        polygons.push(new Polygon([i, i + 1, i + count + 1, i + count], 'red'));
-    }
-    polygons.push(new Polygon([count - 1, 0, count, 2*count - 1]));
-
-    return new Subject(points, edges, polygons);
+    return new Subject(points, edges, polygons, animation);
 }
